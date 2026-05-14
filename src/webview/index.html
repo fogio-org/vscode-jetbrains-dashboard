@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="%STYLES_URI%" />
     <title>JetBrains Dashboard</title>
   </head>
-  <body>
+  <body data-icons-base="%ICONS_URI%">
     <div class="dashboard">
       <aside class="sidebar">
         <div class="sidebar-header">
@@ -35,15 +35,15 @@
           <h2>Actions</h2>
           <div class="action-grid">
             <button class="action-card" data-action="newProject">
-              <span class="action-icon">＋</span>
+              <span class="action-icon"><img alt="" src="%ICONS_URI%/new-project.svg" /></span>
               <span class="action-label">New Project</span>
             </button>
             <button class="action-card" data-action="openFolder">
-              <span class="action-icon">⌗</span>
+              <span class="action-icon"><img alt="" src="%ICONS_URI%/open.svg" /></span>
               <span class="action-label">Open</span>
             </button>
             <button class="action-card" data-action="cloneRepo">
-              <span class="action-icon">⎘</span>
+              <span class="action-icon"><img alt="" src="%ICONS_URI%/clone.svg" /></span>
               <span class="action-label">Clone Repository</span>
             </button>
           </div>
@@ -52,15 +52,15 @@
           <h2>Customize</h2>
           <div class="customize-list">
             <button class="custom-row" data-action="selectTheme">
-              <span class="custom-icon">◐</span>
+              <span class="custom-icon"><img alt="" src="%ICONS_URI%/theme.svg" /></span>
               <span class="custom-label">Color Theme</span>
             </button>
             <button class="custom-row" data-action="openKeymap">
-              <span class="custom-icon">⌨</span>
+              <span class="custom-icon"><img alt="" src="%ICONS_URI%/keymap.svg" /></span>
               <span class="custom-label">Keymap</span>
             </button>
             <button class="custom-row" data-action="openExtensions">
-              <span class="custom-icon">⚙</span>
+              <span class="custom-icon"><img alt="" src="%ICONS_URI%/plugins.svg" /></span>
               <span class="custom-label">Plugins</span>
             </button>
           </div>

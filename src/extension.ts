@@ -11,12 +11,34 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     }),
     vscode.commands.registerCommand('fogioDashboard.pinProject', async () => {
       const projects = await projectManager.list();
+      if (projects.length === 0) {
+        vscode.window.showInformationMessage('No projects to pin.');
+        return;
+      }
       const pick = await vscode.window.showQuickPick(
-        projects.map((p) => ({ label: p.name, description: p.path, project: p })),
-        { placeHolder: 'Select project to pin/unpin' }
+        projects.map((p) => ({
+          label: `${p.pinned ? '$(pinned) ' : ''}${p.name}`,
+          description: p.path,
+          detail: p.pinned ? 'Pinned' : undefined,
+          project: p,
+        })),
+        { placeHolder: 'Select project to pin/unpin', matchOnDescription: true }
       );
       if (pick) {
         await projectManager.togglePin(pick.project.path);
+        DashboardPanel.refreshIfOpen();
+      }
+    }),
+    vscode.commands.registerCommand('fogioDashboard.addProject', async () => {
+      const folderUri = await vscode.window.showOpenDialog({
+        canSelectFolders: true,
+        canSelectFiles: false,
+        canSelectMany: false,
+        openLabel: 'Add to Dashboard',
+      });
+      if (folderUri && folderUri[0]) {
+        await projectManager.addManual(folderUri[0].fsPath);
+        await projectManager.touch(folderUri[0].fsPath);
         DashboardPanel.refreshIfOpen();
       }
     }),

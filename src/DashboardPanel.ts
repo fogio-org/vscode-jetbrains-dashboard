@@ -90,6 +90,20 @@ export class DashboardPanel {
         this.sendProjects();
         return;
       }
+      case 'missingProject': {
+        const { path: p } = msg.payload || {};
+        if (typeof p !== 'string') return;
+        const pick = await vscode.window.showWarningMessage(
+          `Project path no longer exists:\n${p}`,
+          'Remove from list',
+          'Cancel'
+        );
+        if (pick === 'Remove from list') {
+          await this.projectManager.remove(p);
+          this.sendProjects();
+        }
+        return;
+      }
       case 'togglePin': {
         const { path: p } = msg.payload || {};
         if (typeof p !== 'string') return;
@@ -152,25 +166,23 @@ export class DashboardPanel {
         }
       }
     }
+
+    const isDark = vscode.window.activeColorTheme.kind === vscode.ColorThemeKind.Dark
+      || vscode.window.activeColorTheme.kind === vscode.ColorThemeKind.HighContrast;
+    const colorThemeId = isDark ? 'dark-jetbrains-color-theme' : 'light-jetbrains-color-theme';
+
     const config = vscode.workspace.getConfiguration();
-    try {
-      await config.update('workbench.colorTheme', 'JetBrains Darcula', vscode.ConfigurationTarget.Global);
-    } catch {
-      // ignore — theme name may differ
-    }
-    try {
-      await config.update('workbench.iconTheme', 'jetbrains-file-icon-theme', vscode.ConfigurationTarget.Global);
-    } catch {
-      // ignore
-    }
-    try {
-      await config.update(
-        'workbench.productIconTheme',
-        'jetbrains-product-icon-theme',
-        vscode.ConfigurationTarget.Global
-      );
-    } catch {
-      // ignore
+    const updates: Array<[string, string]> = [
+      ['workbench.colorTheme', colorThemeId],
+      ['workbench.iconTheme', 'jetbrains-file-icon-theme-auto'],
+      ['workbench.productIconTheme', 'jetbrains-product-icon-theme'],
+    ];
+    for (const [key, value] of updates) {
+      try {
+        await config.update(key, value, vscode.ConfigurationTarget.Global);
+      } catch (err) {
+        vscode.window.showWarningMessage(`Failed to set ${key}: ${String(err)}`);
+      }
     }
     vscode.window.showInformationMessage('JetBrains theme pack applied.');
   }
@@ -183,9 +195,11 @@ export class DashboardPanel {
   private renderHtml(): string {
     const webview = this.panel.webview;
     const distUri = vscode.Uri.joinPath(this.context.extensionUri, 'dist', 'webview');
+    const iconsUri = vscode.Uri.joinPath(this.context.extensionUri, 'resources', 'icons');
     const htmlPath = path.join(distUri.fsPath, 'index.html');
     const stylesUri = webview.asWebviewUri(vscode.Uri.joinPath(distUri, 'styles.css'));
     const scriptUri = webview.asWebviewUri(vscode.Uri.joinPath(distUri, 'main.js'));
+    const iconsBaseUri = webview.asWebviewUri(iconsUri);
     const nonce = getNonce();
 
     let html: string;
@@ -207,6 +221,7 @@ export class DashboardPanel {
       .replace(/%CSP%/g, csp)
       .replace(/%STYLES_URI%/g, stylesUri.toString())
       .replace(/%SCRIPT_URI%/g, scriptUri.toString())
+      .replace(/%ICONS_URI%/g, iconsBaseUri.toString())
       .replace(/%NONCE%/g, nonce);
   }
 

@@ -7,6 +7,7 @@
   const $projects = document.getElementById('projects');
   const $empty = document.getElementById('empty');
   const $search = document.getElementById('search');
+  const ICONS = document.body.getAttribute('data-icons-base') || '';
 
   $search.addEventListener('input', () => {
     filter = $search.value.trim().toLowerCase();
@@ -68,7 +69,9 @@
     const el = document.createElement('div');
     el.className = 'project' + (p.exists ? '' : ' missing');
     el.setAttribute('role', 'listitem');
-    el.title = p.path;
+    el.tabIndex = 0;
+    const titleSuffix = p.exists ? '' : ' (missing)';
+    el.title = p.path + titleSuffix;
 
     const avatar = document.createElement('div');
     avatar.className = 'project-avatar';
@@ -79,7 +82,7 @@
     meta.className = 'project-meta';
     const name = document.createElement('div');
     name.className = 'project-name';
-    name.textContent = p.name;
+    name.textContent = p.name + (p.exists ? '' : ' (missing)');
     const path = document.createElement('div');
     path.className = 'project-path';
     path.textContent = p.path;
@@ -87,6 +90,7 @@
     meta.appendChild(path);
 
     const right = document.createElement('div');
+    right.className = 'project-right';
     const time = document.createElement('span');
     time.className = 'project-time';
     time.textContent = relTime(p.lastOpened);
@@ -94,15 +98,17 @@
 
     const actions = document.createElement('div');
     actions.className = 'project-actions';
-    actions.appendChild(iconBtn('↗', 'Open in new window', (e) => {
-      e.stopPropagation();
-      vscode.postMessage({ type: 'openProject', payload: { path: p.path, newWindow: true } });
-    }));
-    actions.appendChild(iconBtn(p.pinned ? '★' : '☆', p.pinned ? 'Unpin' : 'Pin', (e) => {
+    if (p.exists) {
+      actions.appendChild(iconBtn('external.svg', 'Open in new window', (e) => {
+        e.stopPropagation();
+        vscode.postMessage({ type: 'openProject', payload: { path: p.path, newWindow: true } });
+      }));
+    }
+    actions.appendChild(iconBtn(p.pinned ? 'pin-filled.svg' : 'pin.svg', p.pinned ? 'Unpin' : 'Pin', (e) => {
       e.stopPropagation();
       vscode.postMessage({ type: 'togglePin', payload: { path: p.path } });
     }, p.pinned ? 'pinned' : ''));
-    actions.appendChild(iconBtn('✕', 'Remove from list', (e) => {
+    actions.appendChild(iconBtn('close.svg', 'Remove from list', (e) => {
       e.stopPropagation();
       vscode.postMessage({ type: 'removeProject', payload: { path: p.path } });
     }));
@@ -112,18 +118,37 @@
     el.appendChild(meta);
     el.appendChild(right);
 
-    el.addEventListener('click', () => {
-      vscode.postMessage({ type: 'openProject', payload: { path: p.path, newWindow: false } });
+    const open = (newWindow) => {
+      if (!p.exists) {
+        vscode.postMessage({ type: 'missingProject', payload: { path: p.path } });
+        return;
+      }
+      vscode.postMessage({ type: 'openProject', payload: { path: p.path, newWindow: !!newWindow } });
+    };
+
+    el.addEventListener('click', (ev) => {
+      open(ev.metaKey || ev.ctrlKey || ev.shiftKey);
+    });
+    el.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter') {
+        open(ev.metaKey || ev.ctrlKey || ev.shiftKey);
+      } else if (ev.key === 'Delete' || ev.key === 'Backspace') {
+        vscode.postMessage({ type: 'removeProject', payload: { path: p.path } });
+      }
     });
 
     return el;
   }
 
-  function iconBtn(text, title, onClick, extraClass) {
+  function iconBtn(iconFile, title, onClick, extraClass) {
     const b = document.createElement('button');
     b.className = 'icon-btn' + (extraClass ? ' ' + extraClass : '');
-    b.textContent = text;
     b.title = title;
+    b.setAttribute('aria-label', title);
+    const img = document.createElement('img');
+    img.alt = '';
+    img.src = ICONS + '/' + iconFile;
+    b.appendChild(img);
     b.addEventListener('click', onClick);
     return b;
   }

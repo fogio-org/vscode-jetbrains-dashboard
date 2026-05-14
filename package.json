@@ -5,6 +5,19 @@
   "version": "0.1.0",
   "publisher": "fogio",
   "license": "MIT",
+  "icon": "resources/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fogio/vscode-jetbrains-dashboard"
+  },
+  "bugs": {
+    "url": "https://github.com/fogio/vscode-jetbrains-dashboard/issues"
+  },
+  "homepage": "https://github.com/fogio/vscode-jetbrains-dashboard#readme",
+  "galleryBanner": {
+    "color": "#1E1F22",
+    "theme": "dark"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -21,6 +34,10 @@
       {
         "command": "fogioDashboard.pinProject",
         "title": "JetBrains Dashboard: Pin Project"
+      },
+      {
+        "command": "fogioDashboard.addProject",
+        "title": "JetBrains Dashboard: Add Project to List"
       },
       {
         "command": "fogioDashboard.clearHistory",
