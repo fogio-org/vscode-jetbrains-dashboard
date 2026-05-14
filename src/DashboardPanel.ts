@@ -36,7 +36,6 @@ export class DashboardPanel {
         retainContextWhenHidden: true,
         localResourceRoots: [
           vscode.Uri.joinPath(context.extensionUri, 'dist'),
-          vscode.Uri.joinPath(context.extensionUri, 'resources'),
         ],
       }
     );
@@ -195,11 +194,9 @@ export class DashboardPanel {
   private renderHtml(): string {
     const webview = this.panel.webview;
     const distUri = vscode.Uri.joinPath(this.context.extensionUri, 'dist', 'webview');
-    const iconsUri = vscode.Uri.joinPath(this.context.extensionUri, 'resources', 'icons');
     const htmlPath = path.join(distUri.fsPath, 'index.html');
     const stylesUri = webview.asWebviewUri(vscode.Uri.joinPath(distUri, 'styles.css'));
     const scriptUri = webview.asWebviewUri(vscode.Uri.joinPath(distUri, 'main.js'));
-    const iconsBaseUri = webview.asWebviewUri(iconsUri);
     const nonce = getNonce();
 
     let html: string;
@@ -211,7 +208,6 @@ export class DashboardPanel {
 
     const csp = [
       `default-src 'none'`,
-      `img-src ${webview.cspSource} data:`,
       `style-src ${webview.cspSource} 'unsafe-inline' https://fonts.googleapis.com`,
       `font-src ${webview.cspSource} https://fonts.gstatic.com data:`,
       `script-src 'nonce-${nonce}'`,
@@ -221,7 +217,6 @@ export class DashboardPanel {
       .replace(/%CSP%/g, csp)
       .replace(/%STYLES_URI%/g, stylesUri.toString())
       .replace(/%SCRIPT_URI%/g, scriptUri.toString())
-      .replace(/%ICONS_URI%/g, iconsBaseUri.toString())
       .replace(/%NONCE%/g, nonce);
   }
 

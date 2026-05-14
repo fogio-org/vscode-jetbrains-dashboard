@@ -8,12 +8,12 @@
   "icon": "resources/icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fogio/vscode-jetbrains-dashboard"
+    "url": "https://github.com/fogio-org/vscode-jetbrains-dashboard"
   },
   "bugs": {
-    "url": "https://github.com/fogio/vscode-jetbrains-dashboard/issues"
+    "url": "https://github.com/fogio-org/vscode-jetbrains-dashboard/issues"
   },
-  "homepage": "https://github.com/fogio/vscode-jetbrains-dashboard#readme",
+  "homepage": "https://github.com/fogio-org/vscode-jetbrains-dashboard#readme",
   "galleryBanner": {
     "color": "#1E1F22",
     "theme": "dark"
@@ -55,6 +55,11 @@
         "fogioDashboard.projectsSource": {
           "type": "string",
           "enum": ["recentlyOpened", "manual", "both"],
+          "enumDescriptions": [
+            "Use VS Code's recently opened history",
+            "Use manually added projects only",
+            "Combine recently opened and manually added projects"
+          ],
           "default": "recentlyOpened",
           "description": "Source of project list."
         },
@@ -73,7 +78,7 @@
     "build": "node esbuild.js --production",
     "watch": "node esbuild.js --watch",
     "compile": "tsc -p ./",
-    "lint": "tsc --noEmit"
+    "lint": "npx tsc --noEmit"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
