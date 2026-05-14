@@ -15,5 +15,6 @@ package-lock.json
 .gitignore
 .eslintrc*
 .prettierrc*
-CHANGELOG.md
+resources/screenshots/
+resources/icon.svg
 jetbrains-dashboard-*.vsix
