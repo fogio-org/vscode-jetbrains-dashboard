@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="%CSP%" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="%STYLES_URI%" />
+    <title>JetBrains Dashboard</title>
+  </head>
+  <body>
+    <div class="dashboard">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <input id="search" type="text" placeholder="Search projects" autocomplete="off" />
+        </div>
+        <div id="projects" class="projects" role="list"></div>
+        <div id="empty" class="empty hidden">No recent projects</div>
+      </aside>
+      <main class="main">
+        <header class="main-header">
+          <div class="logo">
+            <div class="logo-mark">JB</div>
+            <div class="logo-text">
+              <div class="logo-title">JetBrains Dashboard</div>
+              <div class="logo-sub">Welcome to VS Code</div>
+            </div>
+          </div>
+        </header>
+        <section class="actions">
+          <h2>Actions</h2>
+          <div class="action-grid">
+            <button class="action-card" data-action="newProject">
+              <span class="action-icon">＋</span>
+              <span class="action-label">New Project</span>
+            </button>
+            <button class="action-card" data-action="openFolder">
+              <span class="action-icon">⌗</span>
+              <span class="action-label">Open</span>
+            </button>
+            <button class="action-card" data-action="cloneRepo">
+              <span class="action-icon">⎘</span>
+              <span class="action-label">Clone Repository</span>
+            </button>
+          </div>
+        </section>
+        <section class="customize">
+          <h2>Customize</h2>
+          <div class="customize-list">
+            <button class="custom-row" data-action="selectTheme">
+              <span class="custom-icon">◐</span>
+              <span class="custom-label">Color Theme</span>
+            </button>
+            <button class="custom-row" data-action="openKeymap">
+              <span class="custom-icon">⌨</span>
+              <span class="custom-label">Keymap</span>
+            </button>
+            <button class="custom-row" data-action="openExtensions">
+              <span class="custom-icon">⚙</span>
+              <span class="custom-label">Plugins</span>
+            </button>
+          </div>
+          <button class="theme-pack" data-action="applyThemePack">
+            Apply JetBrains Theme Pack
+          </button>
+        </section>
+      </main>
+    </div>
+    <script nonce="%NONCE%" src="%SCRIPT_URI%"></script>
+  </body>
+</html>

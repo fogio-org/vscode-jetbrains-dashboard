@@ -1,0 +1,345 @@
+:root {
+  --jb-bg: var(--vscode-editor-background, #2b2d30);
+  --jb-fg: var(--vscode-editor-foreground, #dfe1e5);
+  --jb-muted: var(--vscode-descriptionForeground, #868a91);
+  --jb-sidebar-bg: var(--vscode-sideBar-background, #2b2d30);
+  --jb-divider: var(--vscode-panel-border, #393b40);
+  --jb-hover: var(--vscode-list-hoverBackground, #393b40);
+  --jb-active: var(--vscode-list-activeSelectionBackground, #2e436e);
+  --jb-active-fg: var(--vscode-list-activeSelectionForeground, #ffffff);
+  --jb-input-bg: var(--vscode-input-background, #1e1f22);
+  --jb-input-fg: var(--vscode-input-foreground, #dfe1e5);
+  --jb-button-bg: var(--vscode-button-background, #365880);
+  --jb-button-fg: var(--vscode-button-foreground, #ffffff);
+  --jb-button-hover: var(--vscode-button-hoverBackground, #4779b3);
+  --jb-radius: 6px;
+  --jb-trans: 150ms ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: var(--jb-bg);
+  color: var(--jb-fg);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  height: 100%;
+}
+
+.sidebar {
+  background: var(--jb-sidebar-bg);
+  border-right: 1px solid var(--jb-divider);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.sidebar-header {
+  padding: 16px;
+  border-bottom: 1px solid var(--jb-divider);
+}
+
+#search {
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--jb-input-bg);
+  color: var(--jb-input-fg);
+  border: 1px solid var(--jb-divider);
+  border-radius: var(--jb-radius);
+  outline: none;
+  transition: border-color var(--jb-trans);
+}
+
+#search:focus {
+  border-color: var(--jb-button-bg);
+}
+
+.projects {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.empty {
+  padding: 32px 16px;
+  color: var(--jb-muted);
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.project-divider {
+  padding: 12px 16px 4px;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--jb-muted);
+  letter-spacing: 0.5px;
+}
+
+.project {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background var(--jb-trans);
+  position: relative;
+}
+
+.project:hover {
+  background: var(--jb-hover);
+}
+
+.project.missing .project-name,
+.project.missing .project-path {
+  color: var(--jb-muted);
+  text-decoration: line-through;
+}
+
+.project-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  color: #fff;
+  user-select: none;
+}
+
+.project-meta {
+  min-width: 0;
+}
+
+.project-name {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-path {
+  font-size: 11px;
+  color: var(--jb-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  direction: rtl;
+  text-align: left;
+}
+
+.project-time {
+  font-size: 11px;
+  color: var(--jb-muted);
+  white-space: nowrap;
+}
+
+.project-actions {
+  display: none;
+  gap: 4px;
+  align-items: center;
+}
+
+.project:hover .project-actions {
+  display: flex;
+}
+
+.project:hover .project-time {
+  display: none;
+}
+
+.icon-btn {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  color: var(--jb-fg);
+  opacity: 0.75;
+  transition: background var(--jb-trans), opacity var(--jb-trans);
+  font-size: 13px;
+}
+
+.icon-btn:hover {
+  background: var(--jb-divider);
+  opacity: 1;
+}
+
+.icon-btn.pinned {
+  color: var(--jb-button-bg);
+  opacity: 1;
+}
+
+.main {
+  padding: 32px 40px;
+  overflow-y: auto;
+}
+
+.main-header {
+  margin-bottom: 32px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo-mark {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #fe2857 0%, #ffd23f 50%, #087cfa 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #fff;
+  font-size: 14px;
+}
+
+.logo-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.logo-sub {
+  font-size: 12px;
+  color: var(--jb-muted);
+}
+
+h2 {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--jb-muted);
+  margin: 0 0 12px 0;
+}
+
+.actions {
+  margin-bottom: 32px;
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.action-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--jb-input-bg);
+  border: 1px solid var(--jb-divider);
+  border-radius: var(--jb-radius);
+  text-align: left;
+  transition: background var(--jb-trans), border-color var(--jb-trans);
+}
+
+.action-card:hover {
+  background: var(--jb-hover);
+  border-color: var(--jb-button-bg);
+}
+
+.action-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: var(--jb-divider);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.action-label {
+  font-weight: 500;
+}
+
+.customize-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.custom-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: var(--jb-radius);
+  text-align: left;
+  transition: background var(--jb-trans);
+}
+
+.custom-row:hover {
+  background: var(--jb-hover);
+}
+
+.custom-icon {
+  width: 20px;
+  text-align: center;
+  color: var(--jb-muted);
+}
+
+.theme-pack {
+  margin-top: 8px;
+  padding: 10px 16px;
+  background: var(--jb-button-bg);
+  color: var(--jb-button-fg);
+  border-radius: var(--jb-radius);
+  font-weight: 500;
+  transition: background var(--jb-trans);
+}
+
+.theme-pack:hover {
+  background: var(--jb-button-hover);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--jb-divider);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--jb-muted);
+}

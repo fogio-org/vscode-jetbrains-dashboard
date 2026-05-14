@@ -1,0 +1,67 @@
+{
+  "name": "jetbrains-dashboard",
+  "displayName": "JetBrains Dashboard",
+  "description": "JetBrains-style Welcome Screen for VS Code",
+  "version": "0.1.0",
+  "publisher": "fogio",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other"],
+  "keywords": ["jetbrains", "dashboard", "welcome", "start screen", "project manager"],
+  "main": "./dist/extension.js",
+  "activationEvents": ["onStartupFinished"],
+  "contributes": {
+    "commands": [
+      {
+        "command": "fogioDashboard.open",
+        "title": "JetBrains Dashboard: Open"
+      },
+      {
+        "command": "fogioDashboard.pinProject",
+        "title": "JetBrains Dashboard: Pin Project"
+      },
+      {
+        "command": "fogioDashboard.clearHistory",
+        "title": "JetBrains Dashboard: Clear Project History"
+      }
+    ],
+    "configuration": {
+      "title": "JetBrains Dashboard",
+      "properties": {
+        "fogioDashboard.showOnStartup": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show dashboard on startup when no folder is open."
+        },
+        "fogioDashboard.projectsSource": {
+          "type": "string",
+          "enum": ["recentlyOpened", "manual", "both"],
+          "default": "recentlyOpened",
+          "description": "Source of project list."
+        },
+        "fogioDashboard.maxProjects": {
+          "type": "number",
+          "default": 25,
+          "minimum": 1,
+          "maximum": 200,
+          "description": "Maximum number of projects to display."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "node esbuild.js --production",
+    "watch": "node esbuild.js --watch",
+    "compile": "tsc -p ./",
+    "lint": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.20.0",
+    "typescript": "^5.3.0"
+  }
+}
