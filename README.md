@@ -18,6 +18,24 @@
 
 ---
 
+## Screenshots
+
+### Dashboard
+
+Project list with pinned projects, search, quick actions, and theme customization — adapts to any VS Code color theme.
+
+![JetBrains Dashboard — Dark Theme](resources/screenshots/dashboard-dark.png)
+
+![JetBrains Dashboard — Light Theme](resources/screenshots/dashboard-light.png)
+
+### Status Bar
+
+Click the `$(home)` icon in the status bar to open the dashboard at any time.
+
+![Status Bar Button](resources/screenshots/status-bar-button.png)
+
+---
+
 ## Features
 
 - **Project list** — recent projects sorted by last opened, with hash-colored avatars (like JetBrains)
