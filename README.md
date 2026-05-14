@@ -26,7 +26,9 @@
 - **Quick actions** — New Project, Open, Clone Repository
 - **Customize** — Color Theme, Keymap, Plugins
 - **One-click theme pack** — install and activate `fogio.jetbrains-color-theme`, `fogio.jetbrains-file-icon-theme`, `fogio.jetbrains-product-icon-theme` together
+- **Status bar button** — `$(home)` icon in status bar, one click to open dashboard
 - **Startup auto-open** — shows automatically when no folder is open (configurable)
+- **Show on empty** — optionally reopen dashboard when all editor tabs are closed (like JetBrains)
 - **Theme-aware** — adapts to any VS Code color theme via CSS variables
 
 Part of the JetBrains-for-VS-Code suite:
@@ -80,6 +82,7 @@ Projects that no longer exist on disk are shown as struck-through. Clicking show
 | Setting | Default | Description |
 | --- | --- | --- |
 | `fogioDashboard.showOnStartup` | `true` | Show dashboard on startup when no folder is open |
+| `fogioDashboard.showWhenNoEditors` | `false` | Show dashboard automatically when all editor tabs are closed |
 | `fogioDashboard.projectsSource` | `"recentlyOpened"` | Source: `"recentlyOpened"`, `"manual"`, or `"both"` |
 | `fogioDashboard.maxProjects` | `25` | Maximum number of projects to display |
 

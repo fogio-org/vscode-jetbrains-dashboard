@@ -5,7 +5,14 @@ import { ProjectManager } from './projectManager';
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
   const projectManager = new ProjectManager(context);
 
+  const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
+  statusBarItem.text = '$(home)';
+  statusBarItem.tooltip = 'JetBrains Dashboard';
+  statusBarItem.command = 'fogioDashboard.open';
+  statusBarItem.show();
+
   context.subscriptions.push(
+    statusBarItem,
     vscode.commands.registerCommand('fogioDashboard.open', () => {
       DashboardPanel.createOrShow(context, projectManager);
     }),
@@ -51,6 +58,13 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       if (confirm === 'Clear') {
         await projectManager.clear();
         DashboardPanel.refreshIfOpen();
+      }
+    }),
+    vscode.window.onDidChangeVisibleTextEditors((editors) => {
+      const config = vscode.workspace.getConfiguration('fogioDashboard');
+      if (!config.get<boolean>('showWhenNoEditors', false)) return;
+      if (editors.length === 0) {
+        DashboardPanel.createOrShow(context, projectManager);
       }
     })
   );

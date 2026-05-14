@@ -180,6 +180,7 @@ export class DashboardPanel {
       ['workbench.colorTheme', colorThemeId],
       ['workbench.iconTheme', 'jetbrains-file-icon-theme-auto'],
       ['workbench.productIconTheme', 'jetbrains-product-icon-theme'],
+      ['workbench.startupEditor', 'none'],
     ];
     for (const [key, value] of updates) {
       try {
