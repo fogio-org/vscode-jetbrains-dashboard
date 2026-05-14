@@ -59,7 +59,7 @@ export class ProjectManager {
       const m = meta[p] || {};
       projects.push({
         path: p,
-        name: m.customName || path.basename(p) || p,
+        name: m.customName || path.basename(p) || 'Project',
         pinned: !!m.pinned,
         lastOpened: m.lastOpened || 0,
         exists: this.safeExists(p),

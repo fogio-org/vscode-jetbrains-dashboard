@@ -24,7 +24,9 @@
   "categories": ["Other"],
   "keywords": ["jetbrains", "dashboard", "welcome", "start screen", "project manager"],
   "main": "./dist/extension.js",
-  "activationEvents": ["onStartupFinished"],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "contributes": {
     "commands": [
       {

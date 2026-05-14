@@ -1,3 +1,4 @@
+import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
@@ -76,6 +77,10 @@ export class DashboardPanel {
       case 'openProject': {
         const { path: p, newWindow } = msg.payload || {};
         if (typeof p !== 'string') return;
+        if (!fs.existsSync(p)) {
+          await this.handleMessage({ type: 'missingProject', payload: { path: p } });
+          return;
+        }
         await this.projectManager.touch(p);
         await vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(p), {
           forceNewWindow: !!newWindow,
@@ -235,10 +240,5 @@ export class DashboardPanel {
 }
 
 function getNonce(): string {
-  let text = '';
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  for (let i = 0; i < 32; i++) {
-    text += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return text;
+  return crypto.randomBytes(16).toString('hex');
 }
