@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.2.0
+
+### Features
+
+- **Status bar button** — `$(home)` icon in the status bar, one click to open dashboard
+- **Show when no editors** — optionally reopen dashboard when all editor tabs are closed (`fogioDashboard.showWhenNoEditors`)
+- **Apply Theme Pack suppresses Welcome** — sets `workbench.startupEditor: none` automatically
+
+### Improvements
+
+- **Faster startup** — dashboard activates immediately instead of waiting for full VS Code startup
+- **Smaller VSIX** — screenshots excluded from package, served from GitHub
+
 ## 0.1.0
 
 ### Features

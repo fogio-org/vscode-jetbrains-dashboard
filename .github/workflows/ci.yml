@@ -31,7 +31,7 @@ jobs:
       - name: Build VSIX (smoke test)
         id: package
         continue-on-error: true
-        run: npx --yes @vscode/vsce package --no-dependencies --out dashboard.vsix > package.log 2>&1
+        run: npx --yes @vscode/vsce package --no-dependencies --allow-star-activation --out dashboard.vsix > package.log 2>&1
 
       - uses: actions/upload-artifact@v4
         if: ${{ steps.package.outcome == 'success' }}
