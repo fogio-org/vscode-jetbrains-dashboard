@@ -64,6 +64,16 @@ Part of the JetBrains-for-VS-Code suite:
 2. **Open VS Code without a folder** — the dashboard appears automatically
 3. **Or** press `Cmd+Shift+P` → `JetBrains Dashboard: Open`
 
+### Disable the default Welcome tab
+
+To prevent VS Code's built-in Welcome tab from appearing alongside the dashboard, add this to your `settings.json`:
+
+```json
+"workbench.startupEditor": "none"
+```
+
+Or use the **Apply JetBrains Theme Pack** button in the dashboard — it sets this automatically.
+
 ## Project List
 
 Each project shows:
