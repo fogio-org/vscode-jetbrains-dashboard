@@ -53,7 +53,7 @@ jobs:
         continue-on-error: true
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
-        run: npx --yes @vscode/vsce publish --no-dependencies
+        run: npx --yes @vscode/vsce publish --no-dependencies --allow-star-activation
       - name: Publish to Open VSX
         id: publish-ovsx
         continue-on-error: true
