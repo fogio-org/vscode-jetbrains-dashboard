@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0
+
+### New Features
+
+- Update release workflow
+- Update icon
+
 ## 0.2.0
 
 ### Features
